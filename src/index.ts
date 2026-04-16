@@ -1,20 +1,16 @@
-// import type { Core } from '@strapi/strapi';
+import { exec } from "child_process";
 
 export default {
-  /**
-   * An asynchronous register function that runs before
-   * your application is initialized.
-   *
-   * This gives you an opportunity to extend code.
-   */
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  async bootstrap() {
+    console.log("🔥 Importing data...");
 
-  /**
-   * An asynchronous bootstrap function that runs before
-   * your application gets started.
-   *
-   * This gives you an opportunity to set up your data model,
-   * run jobs, or perform some special logic.
-   */
-  bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
+    exec("npx strapi import -f export_20260416033338.tar --force", (err, stdout, stderr) => {
+      if (err) {
+        console.error("Import error:", err);
+        return;
+      }
+      console.log(stdout);
+      console.error(stderr);
+    });
+  },
 };
